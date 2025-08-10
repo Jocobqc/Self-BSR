@@ -50,11 +50,11 @@ python train.py -name your_exp_name -dataset_path your_dataset_path
 ```
 
 ### Test
-with FRR
+> with FRR
 ```
 python test.py -name your_exp_name -dataset_path your_dataset_path -frr True
 ```
-without FRR
+> without FRR
 ```
 python test.py -name your_exp_name -dataset_path your_dataset_path -frr False
 ```
