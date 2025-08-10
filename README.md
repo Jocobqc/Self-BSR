@@ -58,3 +58,15 @@ without FRR
 ```
 python test.py -name your_exp_name -dataset_path your_dataset_path -frr False
 ```
+
+## Citation
+
+```
+@article{qu2025self,
+  title={Self-BSR: Self-Supervised Image Denoising and Destriping Based on Blind-Spot Regularization},
+  author={Qu, Chao and Chen, Zewei and Zhang, Jingyuan and Chen, Xiaoyu and Han, Jing},
+  journal={IEEE Transactions on Circuits and Systems for Video Technology},
+  year={2025},
+  publisher={IEEE}
+}
+```
