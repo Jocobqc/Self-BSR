@@ -33,7 +33,7 @@ if __name__ == '__main__':
     psnr_best = 0
     ssim_best = 0    
     for epoch in range(1,opt.epochs+1):
-        #train
+ 
         epoch_start_time = time.time() 
         model.train()
         total_loss_epoch = 0
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         scheduler.step()  
         visualizer.plot_current_losses(loss_dict)       
         visualizer.print_logs('End of epoch %d / %d \t lr %.8f \t Train Time: %d sec' % (epoch, opt.epochs, optimizer.param_groups[0]['lr'], time.time() - epoch_start_time),do_print=True)
-        #test
+
         psnr_avg = 0
         ssim_avg = 0
         if epoch % opt.val_freq == 0:
@@ -63,24 +63,26 @@ if __name__ == '__main__':
             with torch.no_grad():
                 psnr_total = 0
                 ssim_total = 0                
-                compare_num = 0
+                img_num = 0
                 val_images = []
+                save_img_num = 2
                 for iteration, (clean_image,noise_image) in enumerate(val_loader):
                     compare_num += 1
                     clean_image = clean_image.to(device)
                     noise_image = noise_image.to(device)
                     img_denoise,stripe_1d = model(noise_image)
                     n,c,h,w = img_denoise.shape
-                    stripe_1d = stripe_1d.repeat((1,1,h,1))
-                    stripe_1d += 0.5
+                    stripe_2d = stripe_1d.repeat((1,1,h,1))
+                    stripe_2d += 0.5
                     psnr, ssim = compute_psnr_ssim(clean_image, img_denoise, 1.)
                     psnr_total += psnr
-                    ssim_total += ssim                        
-                    val_images.extend([noise_image.squeeze(0).data.cpu(), stripe_1d.squeeze(0).data.cpu(), img_denoise.squeeze(0).data.cpu(), clean_image.squeeze(0).data.cpu()])          
-                save_mutil_imgs(val_images,opt.training_results_dir,epoch,4,1) 
+                    ssim_total += ssim 
+                    if iteration < save_img_num:                 
+                        val_images.extend([noise_image.squeeze(0).data.cpu(), stripe_2d.squeeze(0).data.cpu(), img_denoise.squeeze(0).data.cpu(), clean_image.squeeze(0).data.cpu()])          
+                save_mutil_imgs(val_images,opt.training_results_dir,epoch,4,save_img_num) 
                                
-                psnr_ave = psnr_total / compare_num
-                ssim_ave = ssim_total / compare_num
+                psnr_ave = psnr_total / img_num
+                ssim_ave = ssim_total / img_num
                 if psnr_ave > psnr_best:
                     psnr_best = psnr_ave
                     best_psnr_epoch = epoch
@@ -91,9 +93,8 @@ if __name__ == '__main__':
                     save_checkpoint(model, epoch, opt.checkpoints_dir, save_type="best_ssim")  
                 metrics_msg = '[valid | epoch%d] PSNR: %.4f SSIM: %.4f --- Best_PSNR_epoch %d  Best_PSNR %.4f  Best_SSIM_epoch %d Best_SSIM: %.4f  T+V Time: %d sec'  % \
                         (epoch, psnr_ave, ssim_ave, best_psnr_epoch, psnr_best, best_ssim_epoch, ssim_best,time.time() - epoch_start_time)
-                visualizer.print_logs(metrics_msg,do_print=True)
-
-        #save weight               
+                visualizer.print_logs(metrics_msg, do_print=True)
+              
         if epoch > (opt.epochs//4-1) and epoch % opt.weight_save_freq == 0:          
             save_checkpoint(model, epoch, opt.checkpoints_dir)
         save_checkpoint(model, 'latest', opt.checkpoints_dir)

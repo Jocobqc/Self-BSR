@@ -14,16 +14,15 @@ if __name__ == '__main__':
     model_option = "best_psnr"
     # model_option = "best_ssim"
     # model_option = "2000"    
-    Refine = True #Set to 'True' to enable FRR; set to 'False' to disable FRR. 
     model_path = os.path.join( opt.checkpoints_dir,"epoch_"+model_option+".pth")
     device = torch.device('cuda:{}'.format(opt.gpu_ids[0])) if opt.gpu_ids else torch.device('cpu')
-    model = Self_BSR(opt,Refine).to(device)
+    model = Self_BSR(opt,opt.frr).to(device)
     model.load_state_dict(torch.load(model_path))
     model.eval()
-    if Refine:
-        save_path_imgs  = os.path.join( opt.experimrnt_dir,"test_results_refine","epoch_"+model_option+"_result",'imgs')
-        save_path_denoise  = os.path.join( opt.experimrnt_dir,"test_results_refine","epoch_"+model_option+"_result",'denoise') 
-        save_path_stripe  = os.path.join( opt.experimrnt_dir,"test_results_refine","epoch_"+model_option+"_result",'stripe') 
+    if opt.frr:
+        save_path_imgs  = os.path.join( opt.experimrnt_dir,"test_results_frr","epoch_"+model_option+"_result",'imgs')
+        save_path_denoise  = os.path.join( opt.experimrnt_dir,"test_results_frr","epoch_"+model_option+"_result",'denoise') 
+        save_path_stripe  = os.path.join( opt.experimrnt_dir,"test_results_frr","epoch_"+model_option+"_result",'stripe') 
     else:    
         save_path_imgs  = os.path.join( opt.experimrnt_dir,"test_results","epoch_"+model_option+"_result",'imgs')
         save_path_denoise  = os.path.join( opt.experimrnt_dir,"test_results","epoch_"+model_option+"_result",'denoise') 

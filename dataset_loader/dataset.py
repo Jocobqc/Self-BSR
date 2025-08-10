@@ -11,13 +11,13 @@ class dataset_loader(data.Dataset):
         self.status = status           
         if self.status == 'train':      
             self.clean_dir_path = os.path.join(opt.dataset_path,'train/clean')
-            self.noise_dir_path = os.path.join(opt.dataset_path,'train/noise_r5s5')
+            self.noise_dir_path = os.path.join(opt.dataset_path,'train/noise')
         elif self.status == 'val':      
-            self.clean_dir_path = os.path.join(opt.dataset_path,'val4/clean')
-            self.noise_dir_path = os.path.join(opt.dataset_path,'val4/noise_r5s5')
+            self.clean_dir_path = os.path.join(opt.dataset_path,'val/clean')
+            self.noise_dir_path = os.path.join(opt.dataset_path,'val/noise')
         elif self.status == 'test':      
-            self.clean_dir_path = os.path.join(opt.dataset_path,'val4/clean')
-            self.noise_dir_path = os.path.join(opt.dataset_path,'val4/noise_r5s5')                                           
+            self.clean_dir_path = os.path.join(opt.dataset_path,'test/clean')
+            self.noise_dir_path = os.path.join(opt.dataset_path,'test/noise')                                           
         self.image_filenames = [x for x in os.listdir(self.clean_dir_path) if is_image_file(x)]
         self.image_filenames.sort(key=lambda x:int(x[0:-4]))
         transform_train_list = [transforms.ToTensor()]

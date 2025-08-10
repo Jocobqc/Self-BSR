@@ -9,13 +9,13 @@ def parse_options(parser):
     parser.add_argument('--dataset_path', type=str, default="your path", help='')
     parser.add_argument('--lr', type=float, default=1e-4, help='learning rate')
     parser.add_argument('--bnum', type=int, default=9, help='the number of res blocks') 
-    parser.add_argument('--base_ch', type=int, default=64, help='channels of feature')                  
+    parser.add_argument('--base_ch', type=int, default=64, help='the channels of feature')                  
     parser.add_argument('--input_ch', type=int, default=1, help='3 for RGB and 1 for grayscale')
     parser.add_argument('--output_ch', type=int, default=1, help='3 for RGB and 1 for grayscale')    
     parser.add_argument('--loss_type', type=list, default=['MSE_S','MSE_I_S','TVx_Ip'], help='loss type')  
     parser.add_argument('--loss_weight', type=list, default=['e2','1','3e3'], help='loss weight')    
-    parser.add_argument('--patch_size', type=int, default=48, help='Randomly extract `patch_num` patches of size `patch_size` from the reconstructed image I for TV loss.') 
-    parser.add_argument('--patch_num', type=int, default=6, help='Randomly extract `patch_num` patches of size `patch_size` from the reconstructed image I for TV loss.')        
+    parser.add_argument('--patch_size', type=int, default=48, help='randomly extract `patch_num` patches of size `patch_size` from the reconstructed image I for TV loss.') 
+    parser.add_argument('--patch_num', type=int, default=6, help='randomly extract `patch_num` patches of size `patch_size` from the reconstructed image I for TV loss.')        
     parser.add_argument('--batch_size', type=int, default=8, help="training batch size")
     parser.add_argument('--data_preprocess', type=str, default='crop_Hflip_Vflip',help='training data augmentation')
     parser.add_argument('--crop_size', default=128, type=int, help='training images crop size')
@@ -23,6 +23,7 @@ def parse_options(parser):
     parser.add_argument('--print_freq', type=int, default=400, help='iter frequency of showing training results on console')
     parser.add_argument('--val_freq', type=int, default=1, help='epoch frequency of saving images at the end of val')
     parser.add_argument('--weight_save_freq', type=int, default=50, help='epoch frequency of saving images at the end of val')
+    parser.add_argument('--frr', type=bool, default=False, help='set to True to enable FRR; set to False to disable FRR')
     return parser
 
 def get_train_options():
