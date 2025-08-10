@@ -65,7 +65,7 @@ if __name__ == '__main__':
                 ssim_total = 0                
                 img_num = 0
                 val_images = []
-                save_img_num = 2
+                save_img_num = 1
                 for iteration, (clean_image,noise_image) in enumerate(val_loader):
                     compare_num += 1
                     clean_image = clean_image.to(device)
