@@ -23,7 +23,7 @@ def parse_options(parser):
     parser.add_argument('--print_freq', type=int, default=400, help='iter frequency of showing training results on console')
     parser.add_argument('--val_freq', type=int, default=1, help='epoch frequency of saving images at the end of val')
     parser.add_argument('--weight_save_freq', type=int, default=50, help='epoch frequency of saving images at the end of val')
-    parser.add_argument('--frr', type=bool, default=False, help='set to True to enable FRR; set to False to disable FRR')
+    parser.add_argument('--frr', action='store_true', help='enable FRR')
     return parser
 
 def get_train_options():

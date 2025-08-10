@@ -67,7 +67,7 @@ if __name__ == '__main__':
                 val_images = []
                 save_img_num = 1
                 for iteration, (clean_image,noise_image) in enumerate(val_loader):
-                    compare_num += 1
+                    img_num += 1
                     clean_image = clean_image.to(device)
                     noise_image = noise_image.to(device)
                     img_denoise,stripe_1d = model(noise_image)

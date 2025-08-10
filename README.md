@@ -46,17 +46,17 @@ Follow below descriptions to build dataset directory.
 ### Training
 
 ```
-python train.py -name your_exp_name -dataset_path your_dataset_path 
+python train.py --name your_exp_name --dataset_path your_dataset_path 
 ```
 
 ### Test
 > with FRR
 ```
-python test.py -name your_exp_name -dataset_path your_dataset_path -frr True
+python test.py --name your_exp_name --dataset_path your_dataset_path --frr
 ```
 > without FRR
 ```
-python test.py -name your_exp_name -dataset_path your_dataset_path -frr False
+python test.py --name your_exp_name --dataset_path your_dataset_path
 ```
 
 ## Citation
