@@ -28,8 +28,6 @@ Our experiments are done with:
 Follow below descriptions to build dataset directory.
 
 ```
-
-├─ dataset
 ├─ train
 │  ├─ clean
 │  ├─ noise
