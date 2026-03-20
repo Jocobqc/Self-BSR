@@ -79,7 +79,7 @@ class Self_BSR(nn.Module):
         S_b = pixel_shuffle_up_sampling_pd(S_pd_b, f=2, pad=2)
 
         stripe = self.tail_S(S_b)
-        stripe_1d = torch.sum(stripe,dim=-2,keepdim=True)
+        stripe_1d = torch.mean(stripe,dim=-2,keepdim=True)
 
         img_clean = self.tail_I(I_b)
         
